@@ -1,0 +1,13 @@
+export const LOADING = 'Loading';
+export const LIST_LOADED = 'List Loaded';
+export const ADDING_NEW_ITEM = 'Adding new Item';
+export const ADDED_NEW_ITEM = 'Added New Item';
+export const EDIT_ITEM = 'Edit Item';
+export const DELETE_ITEM = 'Delete Item';
+export const NEW_REPORT_ADD = 'New Report created';
+export const DISPLAY_LIST = 'Display all';
+export const GET_REPORTS = 'Get Reports';
+export const CREATE_NEW_REPORT = 'Create new Report';
+export const EDIT_REPORT = 'Edit Report';
+export const REMOVE_EDIT_FLAG_FOR_REPORT = 'Remove edit flag for report';
+export const UPDATE_REPORTS = 'Update Report';
