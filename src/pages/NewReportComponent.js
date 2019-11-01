@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { TouchableHighlight } from 'react-native';
+import { TouchableHighlight, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { Modal, ToastAndroid, Keyboard, PermissionsAndroid } from 'react-native';
 import { Content, Text, Header, Left, Right, Title, Item, Input, Button, ListItem, CheckBox, Body, Form, Label, Fab } from 'native-base';
@@ -227,7 +227,7 @@ class NewReportComponent extends Component {
 
     save = () => {
         if (this.props.actionType === 'edit') {
-            this.props.updateReport({ ...this.state.report});
+            this.props.updateReport({ ...this.state.report });
         } else {
             this.props.createNewReport({ ...this.state.report, reportId: this.props.count });
         }
@@ -281,11 +281,7 @@ class NewReportComponent extends Component {
                         </Item>
                         <Item stackedLabel>
                             <Label>Age</Label>
-                            <Input value={this.state.report.age} onChangeText={(text) => this.setReportValues('age', text)} />
-                        </Item>
-                        <Item stackedLabel>
-                            <Label>Sex</Label>
-                            <Input value={this.state.report.sex} onChangeText={(text) => this.setReportValues('sex', text)} />
+                            <Input value={this.state.report.age} onChangeText={(text) => this.setReportValues('age', text)} keyboardType={'number-pad'} />
                         </Item>
                         <Item stackedLabel>
                             <Label>Doctor Name</Label>
@@ -307,6 +303,19 @@ class NewReportComponent extends Component {
                                     onChange={this.setDate} />}
                             </Right>
                         </ListItem>
+                        <Picker
+                            mode="dropdown"
+                            iosIcon={<Icon name="arrow-down" />}
+                            placeholder="SEX"
+                            placeholderStyle={{ color: "#bfc6ea" }}
+                            placeholderIconColor="#007aff"
+                            style={{ width: undefined }}
+                            selectedValue={this.state.report.sex}
+                            onValueChange={(text) => this.setReportValues('sex', text)}
+                        >
+                            <Picker.Item label="Male" value="M" />
+                            <Picker.Item label="Female" value="F" />
+                        </Picker>
                         {this.getDynamicItems()}
                     </Form>
 
