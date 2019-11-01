@@ -25,13 +25,9 @@ function updateItemToStore(item) {
 
 export const getList = () => {
     return function (dispatch) {
-        db.createItemsTable().then(() => {
-            db.listItems().then((data) => {
-                dispatch(storeAllItems(data));
-            }).catch((err) => {
-                dispatch(storeAllItems([]));
-            })
-        }).catch(() => {
+        db.listItems().then((data) => {
+            dispatch(storeAllItems(data));
+        }).catch((err) => {
             dispatch(storeAllItems([]));
         });
     }
@@ -58,5 +54,4 @@ export const updateItem = (data) => {
         })
     }
 }
-
 

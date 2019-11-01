@@ -25,8 +25,12 @@ class MainComponent extends Component {
     }
 
     componentDidMount() {
-        this.props.getList();
-        this.props.getReports();
+        setTimeout(() => {
+            this.props.getList();
+        }, 3000);
+        setTimeout(() => {
+            this.props.getReports();
+        }, 5000);
     }
 
     update = (text, field) => {

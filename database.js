@@ -144,7 +144,7 @@ export default class Database {
         return new Promise((resolve) => {
             this.initDB().then((db) => {
                 db.transaction((tx) => {
-                    tx.executeSql('UPDATE ITEMS SET itemName = ?, itemDefault =?, itemRange = ?, age = ?, sex = ? where itemId = ?', [item.itemName, item.itemDefault, item.itemRange, item.age, item.sex, item.itemId]).then(([tx, results]) => {
+                    tx.executeSql('UPDATE ITEMS SET itemName = ?, itemDefault =?, itemRange = ? where itemId = ?', [item.itemName, item.itemDefault, item.itemRange, item.itemId]).then(([tx, results]) => {
                         resolve(results);
                     });
                 }).then((result) => {
@@ -163,11 +163,11 @@ export default class Database {
             const products = [];
             this.initDB().then((db) => {
                 db.transaction((tx) => {
-                    tx.executeSql('SELECT reportId, reportName, patientName, doctorName, age, sex,  items FROM REPORTS', []).then(([tx, results]) => {
+                    tx.executeSql('SELECT reportId, reportName, patientName, age, sex, doctorName, items FROM REPORTS', []).then(([tx, results]) => {
                         var len = results.rows.length;
                         for (let i = 0; i < len; i++) {
                             let row = results.rows.item(i);
-                            const { reportId, reportName, patientName, doctorName } = row;
+                            const { reportId, reportName, patientName, doctorName, age, sex } = row;
                             const items = JSON.parse(row.items);
                             products.push({
                                 reportId,
@@ -202,7 +202,7 @@ export default class Database {
                 }).then((result) => {
                     this.closeDatabase(db);
                 }).catch((err) => {
-
+                    console.log(err);
                 });
             }).catch((err) => {
 
@@ -211,16 +211,20 @@ export default class Database {
     }
 
     updateReport(item) {
+        console.log(item);
         return new Promise((resolve) => {
             this.initDB().then((db) => {
                 db.transaction((tx) => {
-                    tx.executeSql('UPDATE REPORTS SET reportName = ?, patientName = ?, doctorName = ?, items = ? where reportId = ?', [item.reportName, item.patientName, item.doctorName, JSON.stringify(item.items), item.reportId]).then(([tx, results]) => {
+                    const items = JSON.stringify(item.items);
+                    tx.executeSql(`UPDATE REPORTS SET 'reportName'='${item.reportName}', 'patientName'='${item.patientName}', 'doctorName'='${item.doctorName}', 'age'='${item.age}', 'sex'='${item.sex}', 'items'='${items}' where reportId=${item.reportId}`).then(([tx, results]) => {
+                        console.log("results", results);
                         resolve(results);
                     });
                 }).then((result) => {
+                    console.log("result", result);
                     this.closeDatabase(db);
                 }).catch((err) => {
-
+                    console.log("err", err);
                 });
             }).catch((err) => {
 

@@ -4,6 +4,7 @@ import { Content, Header, Title, Left, Body, Right, Form, Item, Label, Input, Bu
 import { connect } from 'react-redux';
 import ListItemComponent from '../utils/ListItem';
 import { updateItem } from '../store/actions/list';
+
 class ListComponent extends Component {
     static navigationOptions = {
         title: 'LIST',

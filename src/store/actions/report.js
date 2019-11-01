@@ -41,13 +41,9 @@ export const removeEditFlag = () => {
 
 export const getReports = () => {
     return function (dispatch) {
-        db.createReportsTable().then(() => {
-            db.listReports().then((data) => {
-                dispatch(storeAllReports(data));
-            }).catch((err) => {
-                dispatch(storeAllReports([]));
-            })
-        }).catch(() => {
+        db.listReports().then((data) => {
+            dispatch(storeAllReports(data));
+        }).catch((err) => {
             dispatch(storeAllReports([]));
         });
     }

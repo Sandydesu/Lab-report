@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { Modal, ToastAndroid, Keyboard, PermissionsAndroid } from 'react-native';
 import { Content, Text, Header, Left, Right, Title, Item, Input, Button, ListItem, CheckBox, Body, Form, Label, Fab } from 'native-base';
@@ -7,6 +8,7 @@ import { addNewReport, updateReport } from '../store/actions/report';
 import moment from 'moment';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import FileViewer from 'react-native-file-viewer';
 
 class NewReportComponent extends Component {
     static navigationOptions = {
@@ -37,6 +39,9 @@ class NewReportComponent extends Component {
         }
     }
 
+    openFile = () => {
+        FileViewer.open(this.state.file.filePath);
+    }
 
     askPermission = async () => {
         try {
@@ -222,7 +227,7 @@ class NewReportComponent extends Component {
 
     save = () => {
         if (this.props.actionType === 'edit') {
-            this.props.updateReport({ ...this.state.report, reportId: this.props.count });
+            this.props.updateReport({ ...this.state.report});
         } else {
             this.props.createNewReport({ ...this.state.report, reportId: this.props.count });
         }
@@ -357,7 +362,9 @@ class NewReportComponent extends Component {
                     visible={this.state.previewPopUp}>
                     <>
                         <Content>
-                            <Label>{this.state.file && this.state.file.filePath}</Label>
+                            {this.state.file && this.state.file.filePath && <TouchableHighlight>
+                                <Icon name="file-pdf-o" size={150} color={'red'} onPress={this.openFile} />
+                            </TouchableHighlight>}
                         </Content>
                         <Button block onPress={this.save}>
                             <Text>Save</Text>
