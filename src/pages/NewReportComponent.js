@@ -191,12 +191,19 @@ class NewReportComponent extends Component {
         this.setState({ modalVisible: false, reportSelectedItems: [], report: { ...this.state.report, items: items } });
     }
 
+    removeItem = (index) => {
+        const list = this.state.report.items;
+        list.splice(index, 1);
+        this.setState({ report: { ...this.state.report, items: list } });
+    }
+
     getDynamicItems() {
         return this.state.report.items.map((item, index) => {
             return (
-                <Item stackedLabel key={`title - ${index} `}>
+                <Item key={`title - ${index} `}>
                     <Label>{item.title}</Label>
                     <Input value={item.value} onChangeText={(text) => this.setFieldValue(index, text)} />
+                    <Icon active name="trash" size={30} color={'red'} onPress={() => this.removeItem(index)} />
                 </Item>
             )
         });
